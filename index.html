@@ -17,6 +17,22 @@
       This page requires JavaScript to display.
     </div>
   </noscript>
+
+ <!-- Telegram click → сообщаем родительской странице (Тильде) -->
+  <script type="text/javascript">
+    document.addEventListener('click', function (ev) {
+      var el = ev.target && ev.target.closest ? ev.target.closest('a[href]') : null;
+      if (!el) return;
+      var href = el.getAttribute('href') || '';
+      if (/(?:t\.me|telegram\.me|tg:\/\/)/i.test(href)) {
+        try {
+          if (window.parent && window.parent !== window) {
+            window.parent.postMessage({ type: 'metrikaGoal', goal: 'telegram_click' }, '*');
+          }
+        } catch (e) {}
+      }
+    }, true);
+  </script>
 </head>
 <body>
   <div id="__bundler_thumbnail">
